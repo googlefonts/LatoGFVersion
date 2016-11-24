@@ -21,8 +21,6 @@ REMAP_FONTS = [
     ("Lato-HeavyItalic.ttf", "Lato-BlackItalic.ttf.renamed"),
 ]
 
-done = []
-
 for old_name, new_name in REMAP_FONTS:
     if old_name in os.listdir('.'):
         os.rename(os.path.join('.', old_name), os.path.join('.', new_name))

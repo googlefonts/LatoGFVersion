@@ -17,7 +17,8 @@ class FontSetup(unittest.TestCase):
 
 class NameComparison(FontSetup):
     """
-    Test new font names match the src font names, apart from the unique ID
+    Test new font names match the src font names, apart from the unique ID.
+    Unique ID is created from scratch using scema based on Glyphsapp
     """
     def test_names(self):
         for font in self.new_fonts:
@@ -35,6 +36,7 @@ class OS2Comparison(FontSetup):
     Test the OS/2 table has the correct values
     """
     def test_os2_fsselection(self):
+        '''Check UseTypoMetrics has been enabled'''
         for font in self.new_fonts:
             if font in self.src_fonts:
                 # fsselection +128 because we have enabled UseTypoMetrics

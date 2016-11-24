@@ -20,24 +20,23 @@ cd ../fonts
 
 FONTS=$(ls *.ttf)
 
-# Rename the font filenames to fit within our GF schema
+# Rename the font filenames to fit within our GF api Thin -> Black
 echo Renaming font files
 python ../build/rename_font_filenames.py
 
-# Replace .ttf.renamed fonts to new ttfs
+# Delete old ttfs and rename .ttf.renamed -> ttf
 python ../build/cleanup.py
 
-FONTS=$(ls *.ttf) # Since fonts have been renamed we need to reassign the variable
+# Since fonts have been renamed we need to reassign the variable
+FONTS=$(ls *.ttf) 
 
-# rename font tables
+# Update font tables to reflect new filenames
 echo renaming font tables, based on new font filenames
 fontbakery-nametable-from-filename.py $FONTS
 
 echo tidying up font files
 # change .ttf.fix -> .ttf
 python ../build/cleanup.py
-
-
 
 # get ymin, ymax for win Ascent, win Descent
 echo Getting yMin and yMax
@@ -48,7 +47,6 @@ echo ymin is $YMIN ymax is $YMAX
 # Recalc Vertical Metrics
 echo Updating win Ascent and win Descent vertical metrics
 fontbakery-fix-vertical-metrics.py -aw=$YMAX -dw=$YMIN $FONTS
-
 
 # Enable UseTypoMetrics
 echo Enabling UseTypoMetrics flag

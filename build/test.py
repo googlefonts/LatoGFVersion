@@ -43,17 +43,29 @@ class OS2Comparison(FontSetup):
                 self.assertEqual(self.src_fonts[font]['OS/2'].fsSelection + 128,
                                  self.new_fonts[font]['OS/2'].fsSelection)
 
-    def test_os2_winascent(self):
+    def test_os2_winascent_windescent(self):
         for font in self.new_fonts:
             if font in self.src_fonts:
                 self.assertNotEqual(self.src_fonts[font]['OS/2'].usWinAscent,
                                     self.new_fonts[font]['OS/2'].usWinAscent)
-
-    def test_os2_windescent(self):
-        for font in self.new_fonts:
-            if font in self.src_fonts:
                 self.assertNotEqual(self.src_fonts[font]['OS/2'].usWinDescent,
                                     self.new_fonts[font]['OS/2'].usWinDescent)
+
+    def test_os2_linegap(self):
+        """Should be 0"""
+        for font in self.new_fonts:
+            if font in self.src_fonts:
+                self.assertEqual(0,
+                                 self.new_fonts[font]['OS/2'].sTypoLineGap)
+
+    def test_os2_ascender_descender(self):
+        """OS/2 Ascender and Descender should equal hhea values"""
+        for font in self.new_fonts:
+            if font in self.src_fonts:
+                self.assertEqual(self.new_fonts[font]['hhea'].ascent,
+                                 self.new_fonts[font]['OS/2'].sTypoAscender)
+                self.assertEqual(self.new_fonts[font]['hhea'].descent,
+                                 self.new_fonts[font]['OS/2'].sTypoDescender)
 
 
 if __name__ == '__main__':

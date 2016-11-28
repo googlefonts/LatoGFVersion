@@ -30,6 +30,8 @@ python ../build/cleanup.py
 # Since fonts have been renamed we need to reassign the variable
 FONTS=$(ls *.ttf) 
 
+echo $FONTS
+
 # Update font tables to reflect new filenames
 echo renaming font tables, based on new font filenames
 fontbakery-nametable-from-filename.py $FONTS
@@ -45,8 +47,10 @@ YMIN=$(fontbakery-check-bbox.py --family --extremes --csv $FONTS |  awk -F, 'NR 
 echo ymin is $YMIN ymax is $YMAX
 
 # Recalc Vertical Metrics
-echo Updating win Ascent and win Descent vertical metrics
-fontbakery-fix-vertical-metrics.py -aw=$YMAX -dw=$YMIN $FONTS
+echo Updating Vertical metrics
+fontbakery-fix-vertical-metrics.py -l=0 -aw=$YMAX -dw=$YMIN -at=1974 -dt=-426 $FONTS
+python ../build/cleanup.py
+fontbakery-fix-vertical-metrics.py $FONTS
 
 # Enable UseTypoMetrics
 echo Enabling UseTypoMetrics flag

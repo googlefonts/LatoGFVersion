@@ -24,5 +24,5 @@ REMAP_FONTS = [
 for old_name, new_name in REMAP_FONTS:
     if old_name in os.listdir('.'):
         os.rename(os.path.join('.', old_name), os.path.join('.', new_name))
-        print 'renamed %s to %s' % (old_name, new_name)
-print 'Done renaming'
+        print('renamed %s to %s' % (old_name, new_name))
+print('Done renaming')
